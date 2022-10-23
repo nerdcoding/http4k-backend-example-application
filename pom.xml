@@ -9,52 +9,82 @@
     <description>Project Main</description>
 
     <properties>
-        <javaVersion>17</javaVersion>
-        <kotlinVersion>1.7.20</kotlinVersion>
-        <junitVersion>5.9.1</junitVersion>
-        <http4kVersion>4.32.0.0</http4kVersion>
+        <java.version>17</java.version>
+        <kotlin.version>1.7.20</kotlin.version>
+
+        <http4k.version>4.33.1.0</http4k.version>
+        <logback.version>1.4.4</logback.version>
+        <kodein.version>7.12.0</kodein.version>
+
+        <junit.version>5.9.1</junit.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlinVersion}</version>
+            <version>${kotlin.version}</version>
         </dependency>
 
         <!-- Http4k -->
         <dependency>
             <groupId>org.http4k</groupId>
             <artifactId>http4k-core</artifactId>
-            <version>${http4kVersion}</version>
+            <version>${http4k.version}</version>
         </dependency>
         <dependency>
             <groupId>org.http4k</groupId>
             <artifactId>http4k-format-kotlinx-serialization</artifactId>
-            <version>${http4kVersion}</version>
+            <version>${http4k.version}</version>
         </dependency>
         <dependency>
-                <groupId>org.http4k</groupId>
-                <artifactId>http4k-client-apache</artifactId>
-                <version>${http4kVersion}</version>
+            <groupId>org.http4k</groupId>
+            <artifactId>http4k-client-apache</artifactId>
+            <version>${http4k.version}</version>
         </dependency>
         <dependency>
                 <groupId>org.http4k</groupId>
                 <artifactId>http4k-server-apache</artifactId>
-                <version>${http4kVersion}</version>
+                <version>${http4k.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.http4k</groupId>
+            <artifactId>http4k-security-oauth</artifactId>
+            <version>${http4k.version}</version>
+        </dependency>
+
+        <!-- Dependency Injection -->
+        <dependency>
+            <groupId>org.kodein.di</groupId>
+            <artifactId>kodein-di-jvm</artifactId>
+            <version>${kodein.version}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
 
         <!-- Testing -->
         <dependency>
+            <groupId>org.http4k</groupId>
+            <artifactId>http4k-testing-kotest</artifactId>
+            <version>${http4k.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
-                <version>${junitVersion}</version>
+                <version>${junit.version}</version>
                 <scope>test</scope>
         </dependency>
         <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junitVersion}</version>
+                <version>${junit.version}</version>
                 <scope>test</scope>
         </dependency>
     </dependencies>
@@ -66,7 +96,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlinVersion}</version>
+                <version>${kotlin.version}</version>
 
                 <executions>
                     <execution>
@@ -84,17 +114,25 @@
                     </execution>
                 </executions>
 
+                <configuration>
+                    <jvmTarget>${javaVersion}</jvmTarget>
+                    <compilerPlugins>
+                        <plugin>kotlinx-serialization</plugin>
+                    </compilerPlugins>
+                </configuration>
+
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
-                        <version>${kotlinVersion}</version>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-serialization</artifactId>
+                        <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
-
-                <configuration>
-                    <jvmTarget>${javaVersion}</jvmTarget>
-                </configuration>
             </plugin>
         </plugins>
     </build>
