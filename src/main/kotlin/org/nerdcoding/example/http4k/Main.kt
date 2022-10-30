@@ -7,6 +7,7 @@ import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 import org.nerdcoding.example.http4k.handler.PingHandler
+import org.nerdcoding.example.http4k.handler.login.LoginHandler
 import org.nerdcoding.example.http4k.utils.config.ApplicationConfig
 import org.nerdcoding.example.http4k.utils.config.createApplicationConfig
 import org.slf4j.LoggerFactory
@@ -19,6 +20,7 @@ fun main(args: Array<String>) {
     val di = DI {
         bindSingleton { createApplicationConfig(getEnvironment(args)) }
         bindSingleton { PingHandler() }
+        bindSingleton { LoginHandler(instance()) }
     }
     val applicationConfig: ApplicationConfig by di.instance()
 

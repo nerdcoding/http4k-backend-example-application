@@ -3,6 +3,7 @@ package org.nerdcoding.example.http4k.utils.config
 import org.http4k.cloudnative.env.Environment
 import org.http4k.cloudnative.env.EnvironmentKey
 import org.http4k.lens.int
+import org.http4k.lens.long
 import org.http4k.lens.string
 
 /**
@@ -20,7 +21,7 @@ data class ServerConfig(
 data class JwtConfig(
     val secret: String,
     val issuer: String,
-    val expirationMillis: Int
+    val expirationMillis: Long
 )
 
 fun createApplicationConfig(env: Environment) =
@@ -31,6 +32,6 @@ fun createApplicationConfig(env: Environment) =
         JwtConfig(
             EnvironmentKey.string().required("JWT_SECRET")(env),
             EnvironmentKey.string().required("JWT_ISSUER")(env),
-            EnvironmentKey.int().required("JWT_EXPIRATION_MILLIS")(env)
+            EnvironmentKey.long().required("JWT_EXPIRATION_MILLIS")(env)
         )
     )
