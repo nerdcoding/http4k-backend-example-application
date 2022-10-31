@@ -1,22 +1,11 @@
-package org.nerdcoding.example.http4k.utils.filter
+package org.nerdcoding.example.http4k.utils.filter.exception
 
-import kotlinx.serialization.Serializable
 import org.http4k.core.Body
 import org.http4k.core.Filter
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.format.KotlinxSerialization.auto
-import org.nerdcoding.example.http4k.utils.exception.HttpStatusCodeException
 import org.slf4j.LoggerFactory
-
-@Serializable
-data class Problem(
-    val type: String,
-    val title: String,
-    val status: Int,
-    val detail: String?,
-    val instance: String,
-)
 
 object ExceptionFilter {
 

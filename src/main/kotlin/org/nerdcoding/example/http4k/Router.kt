@@ -19,8 +19,8 @@ import org.nerdcoding.example.http4k.handler.PingHandler
 import org.nerdcoding.example.http4k.handler.login.AuthenticationRequest
 import org.nerdcoding.example.http4k.handler.login.AuthenticationResponse
 import org.nerdcoding.example.http4k.handler.login.LoginHandler
-import org.nerdcoding.example.http4k.utils.exception.HttpStatusCodeException
-import org.nerdcoding.example.http4k.utils.filter.ExceptionFilter
+import org.nerdcoding.example.http4k.utils.filter.exception.ExceptionFilter
+import org.nerdcoding.example.http4k.utils.filter.exception.HttpStatusCodeException
 
 
 class Router(di: DI) {

@@ -1,4 +1,4 @@
-package org.nerdcoding.example.http4k.utils.exception
+package org.nerdcoding.example.http4k.utils.filter.exception
 
 import org.http4k.core.Status
 

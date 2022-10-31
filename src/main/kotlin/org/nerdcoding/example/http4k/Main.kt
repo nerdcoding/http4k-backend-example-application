@@ -17,11 +17,7 @@ import java.io.File
 fun main(args: Array<String>) {
     val log = LoggerFactory.getLogger("main")
 
-    val di = DI {
-        bindSingleton { createApplicationConfig(getEnvironment(args)) }
-        bindSingleton { PingHandler() }
-        bindSingleton { LoginHandler(instance()) }
-    }
+    val di = createDependencyInjectionBindings(args)
     val applicationConfig: ApplicationConfig by di.instance()
 
     val app = Router(di)()
@@ -31,6 +27,13 @@ fun main(args: Array<String>) {
     ).start()
     log.info("Server started on port ${server.port()}")
 }
+
+private fun createDependencyInjectionBindings(args: Array<String>) =
+    DI {
+        bindSingleton { createApplicationConfig(getEnvironment(args)) }
+        bindSingleton { PingHandler() }
+        bindSingleton { LoginHandler(instance()) }
+    }
 
 private fun getEnvironment(args: Array<String>) =
     if (args.isNotEmpty() && args[0] == "dev")

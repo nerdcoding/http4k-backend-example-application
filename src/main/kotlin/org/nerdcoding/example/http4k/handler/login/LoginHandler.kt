@@ -5,7 +5,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import org.http4k.core.Status
 import org.nerdcoding.example.http4k.model.User
 import org.nerdcoding.example.http4k.utils.config.ApplicationConfig
-import org.nerdcoding.example.http4k.utils.exception.HttpStatusCodeException
+import org.nerdcoding.example.http4k.utils.filter.exception.HttpStatusCodeException
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
