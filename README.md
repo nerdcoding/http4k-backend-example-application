@@ -15,9 +15,9 @@ This example application provides some basic REST endpoints by using the [http4]
   }
    ```
   * Existing users:
-    * Email: "paula@yahoo.com" Password: "paula123" Roles: none
-    * Email: "fritz@yahoo.com" Password: "fritz123" Roles: USER
-    * Email: "heide@yahoo.com" Password: "heide123" Roles: USER, ADMIN
+    * Email: "paula@example.com" Password: "paula123" Roles: none
+    * Email: "fritz@example.com" Password: "fritz123" Roles: USER
+    * Email: "heide@example.com" Password: "heide123" Roles: USER, ADMIN
 * `GET /ping/anonymous`
     * Authentication required: no
     * Authorization required: no
