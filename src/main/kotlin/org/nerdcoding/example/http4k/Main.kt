@@ -8,6 +8,8 @@ import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 import org.nerdcoding.example.http4k.handler.PingHandler
 import org.nerdcoding.example.http4k.handler.login.LoginHandler
+import org.nerdcoding.example.http4k.service.auth.JsonWebTokenService
+import org.nerdcoding.example.http4k.service.auth.UserService
 import org.nerdcoding.example.http4k.utils.config.ApplicationConfig
 import org.nerdcoding.example.http4k.utils.config.createApplicationConfig
 import org.slf4j.LoggerFactory
@@ -31,8 +33,14 @@ fun main(args: Array<String>) {
 private fun createDependencyInjectionBindings(args: Array<String>) =
     DI {
         bindSingleton { createApplicationConfig(getEnvironment(args)) }
+
+        // Handlers
         bindSingleton { PingHandler() }
-        bindSingleton { LoginHandler(instance()) }
+        bindSingleton { LoginHandler(instance(), instance(), instance()) }
+
+        // Services
+        bindSingleton { JsonWebTokenService(instance()) }
+        bindSingleton { UserService() }
     }
 
 private fun getEnvironment(args: Array<String>) =
