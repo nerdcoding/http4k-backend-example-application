@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.nerdcoding.example.http4k</groupId>
-    <artifactId>Main</artifactId>
+    <artifactId>http4k-backend-example-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Main</name>
     <description>Project Main</description>
