@@ -8,9 +8,9 @@ class UserService {
 
     // map of fixed users until database is connected
     private val users = mapOf(
-        "heide@gmail.com" to User("heide@example.com", "heide123", listOf(UserRole.ADMIN, UserRole.USER)),
-        "fritz@yahoo.com" to User("fritz@example.com", "fritz123", listOf(UserRole.USER)),
-        "paula@yahoo.com" to User("paula@example.com", "paula123"),
+        "heide@example.com" to User("heide@example.com", "heide123", listOf(UserRole.ADMIN, UserRole.USER)),
+        "fritz@example.com" to User("fritz@example.com", "fritz123", listOf(UserRole.USER)),
+        "paula@example.com" to User("paula@example.com", "paula123"),
     )
 
     fun findUserByEmail(email: String): User? =
