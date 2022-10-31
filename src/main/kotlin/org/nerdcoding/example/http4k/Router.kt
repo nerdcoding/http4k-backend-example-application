@@ -7,6 +7,7 @@ import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters
+import org.http4k.filter.ServerFilters
 import org.http4k.format.KotlinxSerialization.auto
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
@@ -18,6 +19,7 @@ import org.nerdcoding.example.http4k.handler.PingHandler
 import org.nerdcoding.example.http4k.handler.login.AuthenticationRequest
 import org.nerdcoding.example.http4k.handler.login.AuthenticationResponse
 import org.nerdcoding.example.http4k.handler.login.LoginHandler
+import org.nerdcoding.example.http4k.utils.exception.HttpStatusCodeException
 import org.nerdcoding.example.http4k.utils.filter.ExceptionFilter
 
 
@@ -28,7 +30,15 @@ class Router(di: DI) {
 
     operator fun invoke(): RoutingHttpHandler {
 
-        return ExceptionFilter()
+        return ExceptionFilter() // Filter catches all kind of exceptions and creates a problem response/
+            // Filters errors during unmarshalling of inbound requests.
+            .then(ServerFilters.CatchLensFailure { error ->
+                throw HttpStatusCodeException(
+                    Status.BAD_REQUEST,
+                    "Invalid client request",
+                    if (error.cause != null) error.cause?.message ?: "" else ""
+                )
+            })
             .then(DebuggingFilters.PrintRequest())
             .then(DebuggingFilters.PrintResponse())
             .then(routes(
