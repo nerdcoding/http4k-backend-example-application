@@ -26,7 +26,6 @@ class LoginHandler(
 
         return AuthenticationResponse(
             user.email,
-            user.roles,
             jsonWebTokenService.generate(user),
             "Bearer",
             applicationConfig.jwtConfig.expirationMillis

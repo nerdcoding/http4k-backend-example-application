@@ -6,8 +6,8 @@ import org.http4k.server.asServer
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
-import org.nerdcoding.example.http4k.handler.PingHandler
 import org.nerdcoding.example.http4k.handler.login.LoginHandler
+import org.nerdcoding.example.http4k.handler.ping.PingHandler
 import org.nerdcoding.example.http4k.service.auth.JsonWebTokenService
 import org.nerdcoding.example.http4k.service.auth.UserService
 import org.nerdcoding.example.http4k.utils.config.ApplicationConfig

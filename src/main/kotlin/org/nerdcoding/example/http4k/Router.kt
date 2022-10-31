@@ -15,15 +15,16 @@ import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.nerdcoding.example.http4k.handler.Ping
-import org.nerdcoding.example.http4k.handler.PingHandler
 import org.nerdcoding.example.http4k.handler.login.AuthenticationRequest
 import org.nerdcoding.example.http4k.handler.login.AuthenticationResponse
 import org.nerdcoding.example.http4k.handler.login.LoginHandler
+import org.nerdcoding.example.http4k.handler.ping.PingHandler
+import org.nerdcoding.example.http4k.handler.ping.PingResponse
 import org.nerdcoding.example.http4k.model.User
+import org.nerdcoding.example.http4k.model.UserRole
 import org.nerdcoding.example.http4k.service.auth.JsonWebTokenService
 import org.nerdcoding.example.http4k.service.auth.UserService
-import org.nerdcoding.example.http4k.utils.filter.authentication.AuthenticationFilter
+import org.nerdcoding.example.http4k.utils.filter.auth.AuthFilter
 import org.nerdcoding.example.http4k.utils.filter.exception.ExceptionFilter
 import org.nerdcoding.example.http4k.utils.filter.exception.HttpStatusCodeException
 
@@ -38,7 +39,7 @@ class Router(di: DI) {
         val requestContexts = RequestContexts()
         val requestContextsKey = RequestContextKey.required<User>(requestContexts)
 
-        val authenticationFilter = AuthenticationFilter(jsonWebTokenService, userService)
+        val authFilter = AuthFilter(jsonWebTokenService, userService)
 
         return ExceptionFilter() // Filter catches all kind of exceptions and creates a problem response.
             // Filters errors during unmarshalling of inbound requests.
@@ -54,11 +55,37 @@ class Router(di: DI) {
             //.then(DebuggingFilters.PrintRequest())
             //.then(DebuggingFilters.PrintResponse())
             .then(routes(
-                "/ping" bind Method.GET to authenticationFilter.authRequired(requestContextsKey)
-                    .then {
-                        val response = pingHandler()
+                "/ping/anonymous" bind Method.GET to {
+                    val response = pingHandler.pingAnonymous()
 
-                        Body.auto<Ping>().toLens()(
+                    Body.auto<PingResponse>().toLens()(
+                        response,
+                        Response(Status.OK)
+                    )
+                },
+                "/ping/user" bind Method.GET to authFilter.authenticationRequired(requestContextsKey)
+                    .then(authFilter.authorizationRequired(
+                        requestContextsKey,
+                        UserRole.USER,
+                        UserRole.ADMIN
+                    ))
+                    .then {
+                        val response = pingHandler.pingUser()
+
+                        Body.auto<PingResponse>().toLens()(
+                            response,
+                            Response(Status.OK)
+                        )
+                    },
+                "/ping/admin" bind Method.GET to authFilter.authenticationRequired(requestContextsKey)
+                    .then(authFilter.authorizationRequired(
+                        requestContextsKey,
+                        UserRole.ADMIN
+                    ))
+                    .then {
+                        val response = pingHandler.pingAdmin()
+
+                        Body.auto<PingResponse>().toLens()(
                             response,
                             Response(Status.OK)
                         )

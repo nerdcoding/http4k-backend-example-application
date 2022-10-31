@@ -6,5 +6,5 @@ import java.util.Collections
 data class User(
     val email: String,
     val credentials: String,
-    val roles: List<String> = Collections.emptyList()
+    val roles: List<UserRole> = Collections.emptyList()
 )
